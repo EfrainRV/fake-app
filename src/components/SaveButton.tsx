@@ -5,20 +5,28 @@ interface Props {
     name: string, 
     email: string 
   };
+  getUsers: () => void;
 }
 
-export const SaveButton = ({ userData }: Props) => {
+export const SaveButton = ({ userData, getUsers }: Props) => {
   
   const handleSave = async () => {
-    const response = await fetch('/api/user', {
+    const response = await fetch('/api/users', {
       method: 'POST',
-      body: JSON.stringify(userData),
+      body: JSON.stringify({
+        name: userData.name,
+        email: userData.email
+      }),
       headers: {
         'Content-Type': 'application/json'
       }
     });
 
     console.log(response);
+
+    if (response.ok) {
+      getUsers();
+    }
     // console.log(`Guardando usuario: ${userData.name} - ${userData.email}`);
   }
 
