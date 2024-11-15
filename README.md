@@ -20,6 +20,67 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## API
+
+### Endpoint
+
+- [http://localhost:3000/api/users](http://localhost:3000/api/users)
+
+### Métodos
+
+#### `GET /api/users`
+
+Obtiene una lista de usuarios paginada.
+
+**Parámetros de consulta:**
+
+- `page` (opcional): Número de página (por defecto: 1).
+- `limit` (opcional): Número de usuarios por página (por defecto: 5).
+
+**Respuesta:**
+
+```json
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "createdAt": "2023-11-15T00:17:22.000Z"
+    },
+    ...
+  ],
+  "totalUsers": 10
+}
+```
+
+#### `POST /api/users`
+
+Crea un nuevo usuario.
+
+**Cuerpo de la solicitud:**
+
+```json
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com"
+}
+```
+
+**Respuesta:**
+
+- `201 Created` si el usuario se creó correctamente.
+- `500 Internal Server Error` si hubo un error al crear el usuario.
+
+```json
+{
+  "id": 1,
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "createdAt": "2023-11-15T00:17:22.000Z"
+}
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
