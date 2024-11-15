@@ -15,7 +15,7 @@ export default function Home() {
   const [users, setUsers] = useState([]);
   const [totalUsers, setTotalUsers] = useState(0);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(4);
 
   const getUsers = async (page: number, limit: number) => {
     const response = await fetch(`/api/users?page=${page}&limit=${limit}`);
