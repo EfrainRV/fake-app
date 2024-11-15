@@ -1,6 +1,7 @@
 'use client'
 
 import { faker } from '@faker-js/faker';
+import { toast } from 'react-toastify';
 
 interface Props {
   setUserData: (userData: { name: string, email: string }) => void;
@@ -17,7 +18,8 @@ export const GenerateButton = ({ setUserData }: Props) => {
     const email = faker.internet.email();
   
     console.log(name, email);
-    setUserData(prevUser => ({...prevUser, name, email }));
+    setUserData({ name, email });
+    toast.success('Usuario generado');
   }
 
   return (

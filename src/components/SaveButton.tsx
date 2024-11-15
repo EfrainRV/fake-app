@@ -1,16 +1,25 @@
 'use client'
 
+import { toast } from "react-toastify";
+
 interface Props {
   userData: { 
     name: string, 
     email: string 
   };
-  getUsers: () => void;
+  setUserData: (userData: { name: string, email: string }) => void;
+  getUsers: (page: number, limit: number) => Promise<void>;
 }
 
-export const SaveButton = ({ userData, getUsers }: Props) => {
+export const SaveButton = ({ userData, setUserData, getUsers }: Props) => {
   
   const handleSave = async () => {
+    if (!userData.name || !userData.email) {
+      // console.log('No hay datos para guardar');
+      toast.error('No hay datos para guardar');
+      return;
+    }
+
     const response = await fetch('/api/users', {
       method: 'POST',
       body: JSON.stringify({
@@ -22,11 +31,16 @@ export const SaveButton = ({ userData, getUsers }: Props) => {
       }
     });
 
-    console.log(response);
+    // console.log(response);
 
-    if (response.ok) {
-      getUsers();
+    if (!response.ok) {
+      toast.error('Error al guardar el usuario');
+      return;
     }
+
+    getUsers(1, 5);
+    setUserData({ name: '', email: '' });
+    toast.success('Usuario guardado');
     // console.log(`Guardando usuario: ${userData.name} - ${userData.email}`);
   }
 
