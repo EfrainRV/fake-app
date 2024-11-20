@@ -6,12 +6,14 @@ import { GenerateButton } from "@/components/GenerateButton";
 import { SaveButton } from "@/components/SaveButton";
 import { UsersListContainer } from "@/components/UsersListContainer";
 import { Paginator } from "@/components/Paginator";
+import { ImageForm } from "@/components/ImageForm";
 
 export default function Home() {
   const[userData, setUserData] = useState({
     name: "",
     email: ""
   });
+  const [userImage, setUserImage] = useState("");
   const [users, setUsers] = useState([]);
   const [totalUsers, setTotalUsers] = useState(0);
   const [page, setPage] = useState(1);
@@ -41,9 +43,14 @@ export default function Home() {
         />
       </div>
 
-      <div className="w-full mt-16 flex justify-center">
+      <div className="w-full mt-8 flex flex-col justify-center items-center gap-4">
         <UserCard 
-          userData={userData} 
+          userData={userData}
+        />
+
+        <ImageForm 
+          userImage={userImage} 
+          setUserImage={setUserImage} 
         />
       </div>
 
@@ -51,7 +58,9 @@ export default function Home() {
         <SaveButton 
           userData={userData} 
           setUserData={setUserData} 
-          getUsers={getUsers} 
+          getUsers={getUsers}
+          userImage={userImage} 
+          setUserImage={setUserImage} 
         />
       </div>
 

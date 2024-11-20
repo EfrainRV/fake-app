@@ -7,16 +7,18 @@ interface Props {
     name: string, 
     email: string 
   };
+  userImage: string;
+  setUserImage: (userImage: string) => void;
   setUserData: (userData: { name: string, email: string }) => void;
   getUsers: (page: number, limit: number) => Promise<void>;
 }
 
-export const SaveButton = ({ userData, setUserData, getUsers }: Props) => {
+export const SaveButton = ({ userData, setUserData, getUsers, userImage, setUserImage }: Props) => {
   
   const handleSave = async () => {
-    if (!userData.name || !userData.email) {
+    if (!userData.name || !userData.email || !userImage) {
       // console.log('No hay datos para guardar');
-      toast.error('No hay datos para guardar');
+      toast.error('Faltan datos para guardar');
       return;
     }
 
@@ -24,7 +26,8 @@ export const SaveButton = ({ userData, setUserData, getUsers }: Props) => {
       method: 'POST',
       body: JSON.stringify({
         name: userData.name,
-        email: userData.email
+        email: userData.email,
+        image: userImage
       }),
       headers: {
         'Content-Type': 'application/json'
@@ -40,6 +43,7 @@ export const SaveButton = ({ userData, setUserData, getUsers }: Props) => {
 
     getUsers(1, 5);
     setUserData({ name: '', email: '' });
+    setUserImage('');
     toast.success('Usuario guardado');
     // console.log(`Guardando usuario: ${userData.name} - ${userData.email}`);
   }

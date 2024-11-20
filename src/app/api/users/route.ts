@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
 
-  const { name, email } = await req.json();
+  const { name, email, image } = await req.json();
     
   try {
 
@@ -12,6 +12,7 @@ export async function POST(req: NextRequest) {
       data: {
         name: name,
         email: email,
+        image: image
       }
     });
 
