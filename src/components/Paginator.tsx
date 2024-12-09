@@ -2,28 +2,26 @@
 interface Props {
   page: number;
   totalUsers: number;
-  setPage: (page: number) => void;
   limit: number;
-  setLimit: (limit: number) => void;
+  dispatch: React.Dispatch<any>;
 }
 
 export const Paginator = ({
   page,
   totalUsers,
-  setPage,
   limit,
-  setLimit
+  dispatch
 }: Props) => {
   const totalPages = Math.ceil(totalUsers / limit);
 
   const handlePrev = () => {
     if (page === 1) return;
-    setPage(page - 1);
+    dispatch({ type: 'SET_PAGE', payload: page - 1 });
   }
 
   const handleNext = () => {
     if (page === totalPages) return;
-    setPage(page + 1);
+    dispatch({ type: 'SET_PAGE', payload: page + 1 });
   }
 
   return (

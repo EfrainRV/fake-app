@@ -12,24 +12,24 @@ export const UserCard = ({ userData }: Props) => {
     <div className="w-[350px] p-4 rounded-md bg-gray-100 flex flex-col justify-end gap-1">
         {
           userData.image ? (
-            <div>
+            <div className="w-full h-40 flex justify-center">
               <Image 
                 src={userData.image} 
                 alt={userData.name}
-                width={300}
+                width={250}
                 height={200}
-                className="w-full h-48 object-cover rounded-md"
+                className="w-[250px] h-full object-cover rounded-md"
               />
             </div>
           ) : (
-            <div className="w-full h-48 bg-gray-300 rounded-md">
+            <div className="w-full h-40 flex justify-center">
               <Image 
                 src="/avatar.jpg" 
                 alt="User avatar"
-                width={300}
+                width={250}
                 height={200}
                 loading="lazy"
-                className="w-full h-48 object-cover rounded-md"
+                className="w-[250px] h-full object-cover rounded-md"
               />
             </div>
           )

@@ -10,7 +10,7 @@ interface Props {
   userImage: string;
   setUserImage: (userImage: string) => void;
   setUserData: (userData: { name: string, email: string }) => void;
-  getUsers: (page: number, limit: number) => Promise<void>;
+  getUsers: (page: number, limit: number, query: string) => Promise<void>;
 }
 
 export const SaveButton = ({ userData, setUserData, getUsers, userImage, setUserImage }: Props) => {
@@ -41,7 +41,7 @@ export const SaveButton = ({ userData, setUserData, getUsers, userImage, setUser
       return;
     }
 
-    getUsers(1, 5);
+    getUsers(1, 5, "");
     setUserData({ name: '', email: '' });
     setUserImage('');
     toast.success('Usuario guardado');

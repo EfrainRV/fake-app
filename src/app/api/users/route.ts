@@ -28,20 +28,52 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
 
-  const page = await req.nextUrl.searchParams.get('page') || '1';
-  const limit = await req.nextUrl.searchParams.get('limit') || '5';
+  const page = await req.nextUrl.searchParams.get('page');
+  const limit = await req.nextUrl.searchParams.get('limit');
+  const query = await req.nextUrl.searchParams.get('query');
 
-  const pageNumber = parseInt(page);
-  const limitNumber = parseInt(limit);
+  let totalUsers = await prisma.user.count();
+  let users;
+
+  const pageNumber = page ? parseInt(page) : 1;
+  const limitNumber = limit ? parseInt(limit) : totalUsers;
 
   const skip = (pageNumber - 1) * limitNumber;
 
-  const users = await prisma.user.findMany({
-    take: limitNumber,
-    skip: skip ,
-  });
+  try {
+    if(query) {
+      totalUsers = await prisma.user.count({
+        where: {
+          OR: [
+            { name: { contains: query }},
+            { email: { contains: query }},
+          ]
+        }
+      });
 
-  const totalUsers = await prisma.user.count();
+      users = await prisma.user.findMany({
+        where: {
+          OR: [
+            { name: { contains: query }},
+            { email: { contains: query }},
+          ]
+        },
+        take: limitNumber,
+        skip: skip,
+      })
+  
+      return NextResponse.json({users, totalUsers});
+    }
+  
+    users = await prisma.user.findMany({
+      take: limitNumber,
+      skip: skip,
+    });
+  
+    return NextResponse.json({users, totalUsers});
 
-  return NextResponse.json({users, totalUsers});
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: 'Error al obtener los usuarios' }, { status: 500 });
+  }
 }
